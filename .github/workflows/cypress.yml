@@ -38,4 +38,4 @@ jobs:
       # 清理 Docker 环境
       - name: Stop containers
         if: always() # 即使测试失败也执行
-        run: docker-compose down -v
+        run: docker compose down -v
