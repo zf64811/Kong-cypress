@@ -2,8 +2,9 @@ name: Cypress Tests and Report
 
 on:
   push:
-    branches: [main] # 触发分支
-  workflow_dispatch:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
   build-test-report:
