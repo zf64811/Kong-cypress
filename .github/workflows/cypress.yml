@@ -1,54 +1,41 @@
-name: Kong Tests
+name: Cypress Tests and Report
 
 on:
   push:
-    branches: ['main']
-  pull_request:
-    branches: ['main']
+    branches: [main] # 触发分支
+  workflow_dispatch:
 
 jobs:
-  run-cypress:
-    name: Run Cypress Tests
+  build-test-report:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Check Docker version
+      # 启动 Docker 环境
+      - name: Start Docker containers
         run: |
-          docker -v
-          docker compose version
+          docker-compose up -d
+          # 等待服务启动
+          docker-compose run --rm kong-cp sh -c 'while ! curl -s http://localhost:8001/status >/dev/null; do sleep 5; done'
 
-      - name: Run Docker Compose
-        run: docker compose up --build --exit-code-from cypress-tester
-
-      - name: Wait for Kong to be ready
-        run: |
-          echo "Waiting for Kong at http://localhost:8001 ..."
-          for i in {1..15}; do
-            if curl -s http://localhost:8001/status | grep -q '"database":{"reachable":true}'; then
-              echo "Kong is ready!"
-              break
-            fi
-            echo "Still waiting... ($i)"
-            sleep 5
-          done
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run Cypress tests in Chrome
+      # 安装依赖并运行 Cypress
+      - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
-          browser: chrome
-          config-file: cypress.config.js
-          command: npx cypress run --browser chrome
+          build: npm run build # 如果有前端构建步骤
+          start: docker-compose up -d # 确保服务运行
+          wait-on: 'http://localhost:8001/status' # 等待 Kong 就绪
 
-      - name: Deploy report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      # 部署报告到 GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: ${{ secrets.Kong_TOKEN }}
-          external_repository: zf64811/Kong-cypress.github.io
-          publish_branch: gh-pages
-          publish_dir: ${{ github.workspace }}/cypress/reports
+          github_token: ${{ secrets.KONG_TOKEN }}
+          publish_dir: cypress/reports
+          keep_files: false # 清理旧文件
+
+      # 清理 Docker 环境
+      - name: Stop containers
+        if: always() # 即使测试失败也执行
+        run: docker-compose down -v
