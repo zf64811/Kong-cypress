@@ -33,8 +33,8 @@ jobs:
           external_repository: zf64811/Kong-cypress
           publish_branch: gh-pages
           publish_dir: ${{ github.workspace }}/cypress/reports
-          keep_files: false 
+          keep_files: false
 
       - name: Stop containers
-        if: always() 
+        if: always()
         run: docker compose down -v
