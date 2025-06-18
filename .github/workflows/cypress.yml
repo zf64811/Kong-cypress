@@ -22,7 +22,7 @@ jobs:
       - name: Deploy report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          personal_token: ${{ secrets.GH_TOKEN }}
+          personal_token: ${{ secrets.Kong_TOKEN }}
           external_repository: zf64811/zf64811.github.io
           publish_branch: gh-pages
           publish_dir: ${{ github.workspace }}/cypress/reports
