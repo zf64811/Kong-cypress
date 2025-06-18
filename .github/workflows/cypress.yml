@@ -15,9 +15,9 @@ jobs:
       # 启动 Docker 环境
       - name: Start Docker containers
         run: |
-          docker-compose up -d
+          docker compose up -d
           # 等待服务启动
-          docker-compose run --rm kong-cp sh -c 'while ! curl -s http://localhost:8001/status >/dev/null; do sleep 5; done'
+          docker compose run --rm kong-cp sh -c 'while ! curl -s http://localhost:8001/status >/dev/null; do sleep 5; done'
 
       # 安装依赖并运行 Cypress
       - name: Run Cypress tests
