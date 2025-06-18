@@ -26,7 +26,7 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: npx cypress run# 等待 Kong 就绪
+        run: npx cypress run
 
       # 部署报告到 GitHub Pages
       - name: Deploy to GitHub Pages
