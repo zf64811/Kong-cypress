@@ -13,7 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 启动 Docker 环境
       - name: Start Docker containers
         run: |
           docker compose up -d
@@ -21,14 +20,12 @@ jobs:
         run: |
           timeout 120 sh -c 'until curl -s http://localhost:8001/status >/dev/null; do sleep 5; echo "Waiting for Kong..."; done'
 
-      # 安装依赖并运行 Cypress
       - name: Install dependencies
         run: npm ci
 
       - name: Run tests
         run: npx cypress run
 
-      # 部署报告到 GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -36,9 +33,8 @@ jobs:
           external_repository: zf64811/Kong-cypress
           publish_branch: gh-pages
           publish_dir: ${{ github.workspace }}/cypress/reports
-          keep_files: false # 清理旧文件
+          keep_files: false 
 
-      # 清理 Docker 环境
       - name: Stop containers
-        if: always() # 即使测试失败也执行
+        if: always() 
         run: docker compose down -v
