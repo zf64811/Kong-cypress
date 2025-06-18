@@ -22,12 +22,11 @@ jobs:
           timeout 120 sh -c 'until curl -s http://localhost:8001/status >/dev/null; do sleep 5; echo "Waiting for Kong..."; done'
 
       # 安装依赖并运行 Cypress
-      - name: Run Cypress tests
-        uses: cypress-io/github-action@v6
-        with:
-          build: npm run build # 如果有前端构建步骤
-          start: docker-compose up -d # 确保服务运行
-          wait-on: 'http://localhost:8001/status' # 等待 Kong 就绪
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npx cypress run# 等待 Kong 就绪
 
       # 部署报告到 GitHub Pages
       - name: Deploy to GitHub Pages
