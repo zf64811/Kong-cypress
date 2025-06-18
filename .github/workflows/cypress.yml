@@ -31,8 +31,10 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.KONG_TOKEN }}
-          publish_dir: cypress/reports
+          personal_token: ${{ secrets.KONG_TOKEN }}
+          external_repository: zf64811/zf64811.github.io
+          publish_branch: gh-pages
+          publish_dir: ${{ github.workspace }}/cypress/reports
           keep_files: false # 清理旧文件
 
       # 清理 Docker 环境
