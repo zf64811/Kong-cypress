@@ -6,30 +6,29 @@ networks:
     driver: bridge
 
 services:
-#######################################
-# Postgres: Kong Database
-#######################################
+  #######################################
+  # Postgres: Kong Database
+  #######################################
 
   kong-ee-database:
-      container_name: kong-ee-database
-      image: 'postgres'
-      restart: on-failure
-      volumes:
-        - kong_db_data:/var/lib/postgresql/data
-      networks:
-        - kong-ee-net
-      environment:
-        POSTGRES_USER: 'kong'
-        POSTGRES_DB: 'kong'
-        POSTGRES_PASSWORD: 'kong'
-      healthcheck:
-        test: ["CMD", "pg_isready", "-U", "kong"]
-        interval: 5s
-        timeout: 10s
-        retries: 10
-      ports:
-        - '5432:5432'
-
+    container_name: kong-ee-database
+    image: 'postgres'
+    restart: on-failure
+    volumes:
+      - kong_db_data:/var/lib/postgresql/data
+    networks:
+      - kong-ee-net
+    environment:
+      POSTGRES_USER: 'kong'
+      POSTGRES_DB: 'kong'
+      POSTGRES_PASSWORD: 'kong'
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', 'kong']
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    ports:
+      - '5432:5432'
 
   #######################################
   # Kong API Gateway Classic Mode - Control Plane
@@ -62,3 +61,20 @@ services:
       - '8002:8002'
       - '8443:8443'
       - '8444:8444'
+
+  cypress-tester:
+    container_name: cypress-tester
+    image: cypress/included:14.5.0
+    working_dir: /e2e
+    volumes:
+      - .:/e2e
+    networks:
+      - kong-ee-net
+    depends_on:
+      kong-cp:
+        condition: service_started
+    environment:
+      CYPRESS_baseUrl: http://kong-cp:8002
+    command: >
+      npx cypress run
+      --browser chrome

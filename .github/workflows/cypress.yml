@@ -20,8 +20,8 @@ jobs:
           docker -v
           docker compose version
 
-      - name: Start Docker services
-        run: docker compose -f docker-compose.yml up -d
+      - name: Run Docker Compose
+        run: docker compose up --build --exit-code-from cypress-tester
 
       - name: Wait for Kong to be ready
         run: |
