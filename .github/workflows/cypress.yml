@@ -33,7 +33,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.KONG_TOKEN }}
-          external_repository: zf64811/Kong-cypress.github.io
+          external_repository: zf64811/Kong-cypress
           publish_branch: gh-pages
           publish_dir: ${{ github.workspace }}/cypress/reports
           keep_files: false # 清理旧文件
