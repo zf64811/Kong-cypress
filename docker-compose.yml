@@ -1,0 +1,64 @@
+version: '3.9'
+volumes:
+  kong_db_data: {}
+networks:
+  kong-ee-net:
+    driver: bridge
+
+services:
+#######################################
+# Postgres: Kong Database
+#######################################
+
+  kong-ee-database:
+      container_name: kong-ee-database
+      image: 'postgres'
+      restart: on-failure
+      volumes:
+        - kong_db_data:/var/lib/postgresql/data
+      networks:
+        - kong-ee-net
+      environment:
+        POSTGRES_USER: 'kong'
+        POSTGRES_DB: 'kong'
+        POSTGRES_PASSWORD: 'kong'
+      healthcheck:
+        test: ["CMD", "pg_isready", "-U", "kong"]
+        interval: 5s
+        timeout: 10s
+        retries: 10
+      ports:
+        - '5432:5432'
+
+
+  #######################################
+  # Kong API Gateway Classic Mode - Control Plane
+  #######################################
+
+  kong-cp:
+    image: 'kong/kong-gateway'
+    container_name: kong-cp
+    restart: on-failure
+    command: sh -c "kong migrations bootstrap && kong start"
+    user: root
+    networks:
+      - kong-ee-net
+    environment:
+      KONG_PROXY_ACCESS_LOG: '/dev/stdout'
+      KONG_ADMIN_ACCESS_LOG: '/dev/stdout'
+      KONG_PROXY_ERROR_LOG: '/dev/stderr'
+      KONG_ADMIN_ERROR_LOG: '/dev/stderr'
+      KONG_DATABASE: postgres
+      KONG_PASSWORD: 'handyshake'
+      KONG_ADMIN_LISTEN: '0.0.0.0:8001, 0.0.0.0:8444 ssl'
+      KONG_PROXY_LISTEN: '0.0.0.0:8000, 0.0.0.0:8443 ssl'
+      KONG_ADMIN_GUI_URL: 'http://localhost:8002'
+      KONG_PG_HOST: 'kong-ee-database'
+      KONG_PG_PASSWORD: 'kong'
+      KONG_PG_USER: 'kong'
+    ports:
+      - '8000:8000'
+      - '8001:8001'
+      - '8002:8002'
+      - '8443:8443'
+      - '8444:8444'
