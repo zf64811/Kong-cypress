@@ -2,9 +2,9 @@ name: Cypress Tests and Report
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
   pull_request:
-    branches: ["main"]
+    branches: ['main']
 
 jobs:
   build-test-report:
@@ -34,7 +34,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.KONG_TOKEN }}
-          external_repository: zf64811/zf64811.github.io
+          external_repository: zf64811/Kong-cypress.github.io
           publish_branch: gh-pages
           publish_dir: ${{ github.workspace }}/cypress/reports
           keep_files: false # 清理旧文件
