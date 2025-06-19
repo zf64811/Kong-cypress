@@ -1,0 +1,12 @@
+{
+    "gatewayService": {
+        "serviceName": "TestGatewayService",
+        "tag": "tag1",
+        "invalidApi": "testapi",
+        "validaApi": "http://testapi.com"
+    },
+
+    "gatewayAPI": {
+        "getGatewayServicelistAPI": "http://localhost:8001/default/services?sort_desc=1&size=30"
+    }
+}

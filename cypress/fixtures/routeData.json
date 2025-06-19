@@ -1,0 +1,12 @@
+{
+    "validRoute": {
+        "name": "test.kong.com",
+        "service": "TestGatewayService",
+        "tag": "tag1",
+        "path": "/test"
+    },
+    "routeAPI": {
+        "getGatewayServicelistAPI": "http://localhost:8001/default/services?sort_desc=1&size=30",
+        "getrouteListAPI": "http://localhost:8001/default/routes?sort_desc=1&size=30"
+    }
+}
