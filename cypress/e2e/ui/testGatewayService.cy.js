@@ -7,10 +7,17 @@ const homePage = new HomePage();
 const overViewPage = new OverViewPage();
 
 describe('Test Add GatewayService', () => {
+    let getGatewayServicelistAPI;
+    let serviceName, tag, invalidApi, validaApi;
+    before(() => {
+        cy.fixture('gatewayData').then(data => {
+            ({ serviceName, tag, invalidApi, validaApi } = data.gatewayService);
+            ({ getGatewayServicelistAPI } = data.gatewayAPI);
+        });
+    });
+
     beforeEach(() => {
-        cy.intercept('GET', 'http://localhost:8001/default/services?sort_desc=1&size=30').as(
-            'getGatewayServicelist'
-        );
+        cy.intercept('GET', getGatewayServicelistAPI).as('getGatewayServicelist');
         cy.workspacesLogin();
         homePage.workspacesTitle.should('be.visible').and('contain', ' Workspaces ');
         homePage.workspaceName.click();
@@ -20,7 +27,7 @@ describe('Test Add GatewayService', () => {
     it('Url should be vaild when add a new gateway service', () => {
         homePage.GatewayServiceTab.click();
         cy.wait('@getGatewayServicelist');
-        cy.addNewgatewayService('TestGatewayService', 'tag1', 'testapi');
+        cy.addNewgatewayService(serviceName, tag, invalidApi);
         gatewayServicePage.gatewayServiceAlert_Message
             .should('be.visible')
             .and('contain', "Failed to construct 'URL': Invalid URL");
@@ -29,19 +36,20 @@ describe('Test Add GatewayService', () => {
     it('Add a new gateway service', () => {
         homePage.GatewayServiceTab.click();
         cy.wait('@getGatewayServicelist');
-        cy.addNewgatewayService('TestGatewayService', 'tag1', 'http://testapi.com');
+        cy.addNewgatewayService(serviceName, tag, validaApi);
         gatewayServicePage.gatewayServicePrompt_Message
             .should('be.visible')
-            .and('contain', 'Gateway Service "TestGatewayService" successfully created!');
+            .and('contain', `Gateway Service "${serviceName}" successfully created!`);
         cy.wait(1000);
     });
 
     it('gatewayService name should be unique when add a new gateway service', () => {
         homePage.GatewayServiceTab.click();
         cy.wait('@getGatewayServicelist');
-        cy.addNewgatewayService('TestGatewayService', 'tag1', 'http://testapi.com');
+        cy.addNewgatewayService(serviceName, tag, validaApi);
         gatewayServicePage.gatewayServiceAlert_Message
             .should('be.visible')
-            .and('contain', `UNIQUE violation detected on '{name="TestGatewayService"}'`);
+            .and('contain', `UNIQUE violation detected on '{name="${serviceName}"}'`);
     });
+
 });

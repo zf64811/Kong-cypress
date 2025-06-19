@@ -4,7 +4,7 @@ class GatewayServicePage {
             if ($body.find('[data-testid="filter-button"]').length > 0) {
                 cy.get('[data-testid="toolbar-add-gateway-service"]').click();
             } else {
-                cy.get('[data-testid="empty-state-action"').click();
+                cy.get('[data-testid="empty-state-action"]').click();
             }
         });
     }
