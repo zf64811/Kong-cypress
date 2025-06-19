@@ -24,7 +24,10 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import GatewayServicePage from '../../pages/gatewayService.page';
+import RoutePage from '../../pages/route.page';
+
 const gatewayServicePage = new GatewayServicePage();
+const routePage = new RoutePage();
 
 Cypress.Commands.add('workspacesLogin', () => {
     cy.visit('/workspaces');
@@ -41,3 +44,11 @@ Cypress.Commands.add(
         gatewayServicePage.gatewayServiceSave_Button.click();
     }
 );
+
+Cypress.Commands.add('addRoute', (routeName, routeTag, routePath) => {
+    routePage.clickaddNewRoute_Button();
+    routePage.routeName_Input.type(routeName);
+    routePage.routeTags_Input.type(routeTag);
+    routePage.routePath_Input.type(routePath);
+    routePage.routeSave_Button.click();
+});
