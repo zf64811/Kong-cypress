@@ -23,7 +23,21 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import GatewayServicePage from '../../pages/gatewayService.page';
+const gatewayServicePage = new GatewayServicePage();
 
 Cypress.Commands.add('workspacesLogin', () => {
-  cy.visit('/workspaces');
+    cy.visit('/workspaces');
+    cy.url().should('include', '/workspaces');
 });
+
+Cypress.Commands.add(
+    'addNewgatewayService',
+    (gatewayServiceName, gatewayServiceTag, gatewayServiceFullUrl) => {
+        gatewayServicePage.clickaddNewgatewayService_Button();
+        gatewayServicePage.newgatewayServiceName_Input.type(gatewayServiceName);
+        gatewayServicePage.gatewayServiceTags_Input.type(gatewayServiceTag);
+        gatewayServicePage.gatewayServiceFullUrl_Input.type(gatewayServiceFullUrl);
+        gatewayServicePage.gatewayServiceSave_Button.click();
+    }
+);
