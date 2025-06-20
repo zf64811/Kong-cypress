@@ -1,10 +1,12 @@
 import HomePage from '../../../pages/home.page';
 import RoutePage from '../../../pages/route.page';
 import OverViewPage from '../../../pages/overview.page';
+import BasePage from '../../../pages/base.page';
 
 const overViewPage = new OverViewPage();
 const homePage = new HomePage();
 const routePage = new RoutePage();
+const basePage = new BasePage();
 
 describe('Test Add Route', () => {
     let name, tag, path;
@@ -42,5 +44,21 @@ describe('Test Add Route', () => {
         routePage.routeAlert_Message
             .should('be.visible')
             .and('contain', `UNIQUE violation detected on '{name="${name}"}'`);
+    });
+
+    it('Delete a new route', () => {
+        basePage.filter_Button.click();
+        basePage.filterbyName_Button.click();
+        basePage.filterbyName_Input.should('be.visible').type(name);
+        basePage.filterApply_Button.click();
+        cy.wait(1000);
+        basePage.actionButton.should('be.visible').click();
+        basePage.delete_Button.should('be.visible').click();
+        basePage.confirmDelete_Input.should('be.visible').type(name);
+        basePage.confirmDelete_Input.should('have.value', name);
+        basePage.confirmDelete_button.should('be.visible').click();
+        routePage.routePrompt_Message
+            .should('be.visible')
+            .and('contain', `Route "${name}" successfully deleted!`);
     });
 });
