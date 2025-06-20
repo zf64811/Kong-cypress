@@ -1,10 +1,12 @@
 import HomePage from '../../../pages/home.page';
 import OverViewPage from '../../../pages/overview.page';
 import GatewayServicePage from '../../../pages/gatewayService.page';
+import BasePage from '../../../pages/base.page';
 
 const gatewayServicePage = new GatewayServicePage();
 const homePage = new HomePage();
 const overViewPage = new OverViewPage();
+const basePage = new BasePage();
 
 describe('Test Add GatewayService', () => {
     let gatewayServicelistAPI;
@@ -53,16 +55,16 @@ describe('Test Add GatewayService', () => {
     });
 
     it('Delete a new gateway service', () => {
-        gatewayServicePage.gatewayServiceFilter_Button.click();
-        gatewayServicePage.filterbyName_Button.click();
-        gatewayServicePage.filterbyName_Input.should('be.visible').type(serviceName);
-        gatewayServicePage.filterApply_Button.click();
+        basePage.filter_Button.click();
+        basePage.filterbyName_Button.click();
+        basePage.filterbyName_Input.should('be.visible').type(serviceName);
+        basePage.filterApply_Button.click();
         cy.wait(1000);
-        gatewayServicePage.actionButton.should('be.visible').click();
-        gatewayServicePage.delete_Button.should('be.visible').click();
-        gatewayServicePage.confirmDelete_Input.should('be.visible').type(serviceName);
-        gatewayServicePage.confirmDelete_Input.should('have.value', serviceName);
-        gatewayServicePage.confirmDelete_button.should('be.visible').click();
+        basePage.actionButton.should('be.visible').click();
+        basePage.delete_Button.should('be.visible').click();
+        basePage.confirmDelete_Input.should('be.visible').type(serviceName);
+        basePage.confirmDelete_Input.should('have.value', serviceName);
+        basePage.confirmDelete_button.should('be.visible').click();
         gatewayServicePage.gatewayServicePrompt_Message
             .should('be.visible')
             .and('contain', `Gateway Service "${serviceName}" successfully deleted!`);
