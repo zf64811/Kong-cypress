@@ -48,7 +48,7 @@ describe('Test Route Page', () => {
 
     it('Route name should unique when add new Routes', () => {
         routePage.clickaddNewRoute_Button();
-        cy.addRoute(name, tag, path);
+        cy.addRoute(name, null, tag, path);
         routePage.routeAlert_Message
             .should('be.visible')
             .and('contain', `UNIQUE violation detected on '{name="${name}"}'`);
