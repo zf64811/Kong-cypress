@@ -9,10 +9,13 @@ const routePage = new RoutePage();
 describe('Test Add Route', () => {
     let name, tag, path;
     let getGatewayServicelistAPI, getrouteListAPI;
+    let workspacesTitle, overViewPageTitle;
+
     before(() => {
         cy.fixture('routeData').then(data => {
             ({ name, tag, path } = data.validRoute);
             ({ getGatewayServicelistAPI, getrouteListAPI } = data.routeAPI);
+            ({ workspacesTitle, overViewPageTitle } = data.contextAssert);
         });
     });
 
@@ -20,9 +23,9 @@ describe('Test Add Route', () => {
         cy.intercept('GET', getGatewayServicelistAPI).as('getGatewayServicelist');
         cy.intercept('GET', getrouteListAPI).as('getRouteList');
         cy.workspacesLogin();
-        homePage.workspacesTitle.should('be.visible').and('contain', ' Workspaces ');
+        homePage.workspacesTitle.should('be.visible').and('contain', workspacesTitle);
         homePage.workspaceName.click();
-        overViewPage.OverViewPageTitle.should('be.visible').and('contain', 'Overview');
+        overViewPage.OverViewPageTitle.should('be.visible').and('contain', overViewPageTitle);
         homePage.RouteTab.click();
         cy.wait('@getRouteList');
     });

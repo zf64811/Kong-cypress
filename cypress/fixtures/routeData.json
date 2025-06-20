@@ -1,4 +1,9 @@
 {
+    "contextAssert": {
+        "workspacesTitle": " Workspaces ",
+        "overViewPageTitle": "Overview"
+    },
+
     "validRoute": {
         "name": "test.kong.com",
         "service": "TestGatewayService",

@@ -9,19 +9,22 @@ const overViewPage = new OverViewPage();
 describe('Test Add GatewayService', () => {
     let getGatewayServicelistAPI;
     let serviceName, tag, invalidApi, validaApi;
+    let workspacesTitle, overViewPageTitle;
+
     before(() => {
         cy.fixture('gatewayData').then(data => {
             ({ serviceName, tag, invalidApi, validaApi } = data.gatewayService);
             ({ getGatewayServicelistAPI } = data.gatewayAPI);
+            ({ workspacesTitle, overViewPageTitle } = data.contextAssert);
         });
     });
 
     beforeEach(() => {
         cy.intercept('GET', getGatewayServicelistAPI).as('getGatewayServicelist');
         cy.workspacesLogin();
-        homePage.workspacesTitle.should('be.visible').and('contain', ' Workspaces ');
+        homePage.workspacesTitle.should('be.visible').and('contain', workspacesTitle);
         homePage.workspaceName.click();
-        overViewPage.OverViewPageTitle.should('be.visible').and('contain', 'Overview');
+        overViewPage.OverViewPageTitle.should('be.visible').and('contain', overViewPageTitle);
     });
 
     it('Url should be vaild when add a new gateway service', () => {
@@ -51,5 +54,4 @@ describe('Test Add GatewayService', () => {
             .should('be.visible')
             .and('contain', `UNIQUE violation detected on '{name="${serviceName}"}'`);
     });
-
 });
