@@ -29,5 +29,12 @@ class GatewayServicePage {
     get gatewayServicePrompt_Message() {
         return cy.get('.toaster-message');
     }
+    get gatewaydeleteAlert_Message() {
+        return cy.get('.prompt-content .alert-message');
+    }
+
+    get addRoute_Button() {
+        return cy.get('.alert-message > .k-button');
+    }
 }
 export default GatewayServicePage;

@@ -1,0 +1,23 @@
+{
+    "contextAssert": {
+        "workspacesTitle": " Workspaces ",
+        "overViewPageTitle": "Overview"
+    },
+    "gatewayService": {
+        "serviceName": "RegressionTestName",
+        "gatewayTag": "RegressionTag",
+        "validaApi": "http://regressionTestapi.com"
+    },
+    "gatewayAPI": {
+        "gatewayServicelistAPI": "http://localhost:8001/default/services?sort_desc=1&size=30"
+    },
+    "validRoute": {
+        "name": "regressionTest.kong.com",
+        "serviceName": "RegressionTestName",
+        "routeTag": "RegressionTag",
+        "path": "/regressionTest"
+    },
+    "routeAPI": {
+        "getrouteListAPI": "http://localhost:8001/default/routes?sort_desc=1&size=30"
+    }
+}

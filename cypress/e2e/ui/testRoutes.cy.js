@@ -39,13 +39,15 @@ describe('Test Route Page', () => {
     });
 
     it('Add new Routes', () => {
-        cy.addRoute(name, tag, path);
+        routePage.clickaddNewRoute_Button();
+        cy.addRoute(name, null, tag, path);
         routePage.routePrompt_Message
             .should('be.visible')
             .and('contain', `Route "${name}" successfully created!`);
     });
 
     it('Route name should unique when add new Routes', () => {
+        routePage.clickaddNewRoute_Button();
         cy.addRoute(name, tag, path);
         routePage.routeAlert_Message
             .should('be.visible')

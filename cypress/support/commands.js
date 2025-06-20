@@ -44,10 +44,13 @@ Cypress.Commands.add(
         gatewayServicePage.gatewayServiceSave_Button.click();
     }
 );
-
-Cypress.Commands.add('addRoute', (routeName, routeTag, routePath) => {
-    routePage.clickaddNewRoute_Button();
+    // routePage.clickaddNewRoute_Button();
+Cypress.Commands.add('addRoute', (routeName, serviceName, routeTag, routePath) => {
     routePage.routeName_Input.type(routeName);
+    if (serviceName) {
+        routePage.routeService_Input.type(serviceName);
+        routePage.routeService_dropdown.contains(serviceName).click();
+    }
     routePage.routeTags_Input.type(routeTag);
     routePage.routePath_Input.type(routePath);
     routePage.routeSave_Button.click();
