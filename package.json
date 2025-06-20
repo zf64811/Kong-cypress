@@ -1,11 +1,15 @@
 {
-  "scripts": {
-    "test": "cypress run"
-  },
-  "devDependencies": {
-    "cypress": "^14.5.0"
-  },
-  "dependencies": {
-    "cypress-mochawesome-reporter": "^3.8.2"
-  }
+    "scripts": {
+        "test": "cypress run",
+        "run": "cypress run --browser chrome",
+        "open": "cypress open",
+        "spec": "cypress run --spec",
+        "docker": "docker-compose up --abort-on-container-exit --build"
+    },
+    "devDependencies": {
+        "cypress": "^14.5.0"
+    },
+    "dependencies": {
+        "cypress-mochawesome-reporter": "^3.8.2"
+    }
 }
