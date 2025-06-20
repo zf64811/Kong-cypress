@@ -17,5 +17,6 @@ class HomePage {
     get RouteTab() {
         return cy.get('[data-testid="sidebar-item-routes"]');
     }
+
 }
 export default HomePage;
