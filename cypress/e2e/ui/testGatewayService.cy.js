@@ -8,7 +8,7 @@ const homePage = new HomePage();
 const overViewPage = new OverViewPage();
 const basePage = new BasePage();
 
-describe('Test Add GatewayService', () => {
+describe('Test GatewayService Page', () => {
     let gatewayServicelistAPI;
     let serviceName, tag, invalidApi, validaApi;
     let workspacesTitle, overViewPageTitle;
@@ -29,6 +29,12 @@ describe('Test Add GatewayService', () => {
         overViewPage.OverViewPageTitle.should('be.visible').and('contain', overViewPageTitle);
         homePage.GatewayServiceTab.click();
         cy.wait('@gatewayServicelist');
+    });
+
+    afterEach(function () {
+        const title = this.currentTest.title;
+        const state = this.currentTest.state; // "passed" or "failed"
+        cy.screenshot(`${title} -- ${state}`, { capture: 'runner' });
     });
 
     it('Url should be vaild when add a new gateway service', () => {

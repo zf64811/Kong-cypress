@@ -8,7 +8,7 @@ const homePage = new HomePage();
 const routePage = new RoutePage();
 const basePage = new BasePage();
 
-describe('Test Add Route', () => {
+describe('Test Route Page', () => {
     let name, tag, path;
     let getGatewayServicelistAPI, getrouteListAPI;
     let workspacesTitle, overViewPageTitle;
@@ -30,6 +30,12 @@ describe('Test Add Route', () => {
         overViewPage.OverViewPageTitle.should('be.visible').and('contain', overViewPageTitle);
         homePage.RouteTab.click();
         cy.wait('@getRouteList');
+    });
+    
+    afterEach(function () {
+        const title = this.currentTest.title;
+        const state = this.currentTest.state; // "passed" or "failed"
+        cy.screenshot(`${title} -- ${state}`, { capture: 'runner' });
     });
 
     it('Add new Routes', () => {
