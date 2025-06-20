@@ -4,7 +4,8 @@
         "run": "cypress run --browser chrome",
         "open": "cypress open",
         "spec": "cypress run --spec",
-        "docker": "docker-compose up --abort-on-container-exit --build"
+        "docker:up": "docker compose up kong-ee-database kong-cp",
+        "docker:down": "docker compose down"
     },
     "devDependencies": {
         "cypress": "^14.5.0"
