@@ -1,7 +1,7 @@
-import HomePage from '../../../pages/home.page';
-import RoutePage from '../../../pages/route.page';
-import OverViewPage from '../../../pages/overview.page';
-import BasePage from '../../../pages/base.page';
+import HomePage from '../../pages/home.page';
+import RoutePage from '../../pages/route.page';
+import OverViewPage from '../../pages/overview.page';
+import BasePage from '../../pages/base.page';
 
 const overViewPage = new OverViewPage();
 const homePage = new HomePage();
@@ -31,7 +31,7 @@ describe('Test Route Page', () => {
         homePage.RouteTab.click();
         cy.wait('@getRouteList');
     });
-    
+
     afterEach(function () {
         const title = this.currentTest.title;
         const state = this.currentTest.state; // "passed" or "failed"

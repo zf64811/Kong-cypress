@@ -1,7 +1,7 @@
-import HomePage from '../../../pages/home.page';
-import OverViewPage from '../../../pages/overview.page';
-import GatewayServicePage from '../../../pages/gatewayService.page';
-import BasePage from '../../../pages/base.page';
+import HomePage from '../../pages/home.page';
+import OverViewPage from '../../pages/overview.page';
+import GatewayServicePage from '../../pages/gatewayService.page';
+import BasePage from '../../pages/base.page';
 
 const gatewayServicePage = new GatewayServicePage();
 const homePage = new HomePage();

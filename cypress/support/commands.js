@@ -23,8 +23,8 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-import GatewayServicePage from '../../pages/gatewayService.page';
-import RoutePage from '../../pages/route.page';
+import GatewayServicePage from '../pages/gatewayService.page';
+import RoutePage from '../pages/route.page';
 
 const gatewayServicePage = new GatewayServicePage();
 const routePage = new RoutePage();
