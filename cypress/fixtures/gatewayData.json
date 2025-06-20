@@ -1,4 +1,8 @@
 {
+    "contextAssert": {
+        "workspacesTitle": " Workspaces ",
+        "overViewPageTitle": "Overview"
+    },
     "gatewayService": {
         "serviceName": "TestGatewayService",
         "tag": "tag1",
@@ -7,6 +11,6 @@
     },
 
     "gatewayAPI": {
-        "getGatewayServicelistAPI": "http://localhost:8001/default/services?sort_desc=1&size=30"
+        "gatewayServicelistAPI": "http://localhost:8001/default/services?sort_desc=1&size=30"
     }
 }
